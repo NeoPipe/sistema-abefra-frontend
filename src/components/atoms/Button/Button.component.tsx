@@ -1,8 +1,13 @@
-const Button = () => {
-  return (
-    <button>
-      Click Me
-    </button>
-  );
+import type { ReactNode } from "react";
+import Button from "./Button.style";
+
+interface ButtonComponentInterface
+  extends React.ComponentPropsWithRef<typeof Button> {
+  children?: ReactNode;
 }
-export default Button;
+
+const ButtonComponent = ({ children, ...rest }: ButtonComponentInterface) => {
+  return <Button {...rest}>{children}</Button>;
+};
+
+export default ButtonComponent;
