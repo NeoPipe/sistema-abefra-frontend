@@ -1,4 +1,5 @@
 import { createRoot } from "react-dom/client";
+import { ToastContainer } from "react-toastify";
 import App from "./App";
 import GlobalStyle from "./assets/styles/GlobalStyles";
 
@@ -7,5 +8,6 @@ root.render(
   <>
     <GlobalStyle />
     <App />
+    <ToastContainer />
   </>
 );
