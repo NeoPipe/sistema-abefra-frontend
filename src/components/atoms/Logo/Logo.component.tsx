@@ -1,7 +1,7 @@
 import Logo from "./Logo.style";
 
 interface LogoComponentInterface extends React.ComponentPropsWithRef<"img"> {
-  src: string;
+  src?: string;
 }
 
 const LogoComponent = ({ ...rest }: LogoComponentInterface) => {
