@@ -2,7 +2,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 const api = axios.create({
-  baseURL: "http://localhost:8080/",
+  baseURL: "http://localhost:3000/",
 });
 
 api.interceptors.request.use((config) => {
@@ -19,7 +19,7 @@ api.interceptors.response.use(
   },
 
   (error) => {
-    toast.error(error.response.data.userMessage);
+    toast.error(error.response.data.message);
     return Promise.reject(error);
   }
 );
