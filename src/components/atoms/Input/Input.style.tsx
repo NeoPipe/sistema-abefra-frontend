@@ -7,11 +7,11 @@ interface InputInterface {
 
 const Input = styled.input<InputInterface>`
   border: none;
-  /* background: ${colors.darkGreen}; */
+
   width: ${sizes.size100Percent};
   padding: ${sizes.size8} ${sizes.size12};
-  border-radius: ${sizes.size20};
-  border: 1px solid ${colors.black};
+  border-radius: ${sizes.size5};
+  border: 1px solid ${colors.blackOpacity};
   font-size: ${fontSizes.fontSize18};
   transition: border-color 0.25s;
   color: ${colors.black};

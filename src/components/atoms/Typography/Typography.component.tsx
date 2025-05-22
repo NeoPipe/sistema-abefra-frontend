@@ -4,6 +4,7 @@ import { colors } from "../../../assets/styles/variables";
 interface TypographyInterface {
   color?: string;
   fullCentralized?: boolean;
+  marginBottom?: string;
 }
 
 const Typography = styled.h1<TypographyInterface>`
@@ -14,6 +15,8 @@ const Typography = styled.h1<TypographyInterface>`
     css`
       text-align: center;
     `};
+  margin-bottom: ${({ marginBottom }: TypographyInterface) =>
+    !marginBottom ? "none" : marginBottom};
 `;
 
 export default Typography;

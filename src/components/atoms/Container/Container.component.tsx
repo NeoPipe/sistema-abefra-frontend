@@ -6,13 +6,31 @@ interface ContainerComponentInterface
   children?: JSX.Element | JSX.Element[];
   fullCentralized?: boolean;
   fullHeight?: boolean;
+  fullWidth?: boolean;
+  displayFlex?: boolean;
+  directionColumn?: boolean;
+  gap?: string;
 }
 
 const ContainerComponent = ({
   children,
   fullCentralized,
+  fullHeight,
+  fullWidth,
+  displayFlex,
+  directionColumn,
 }: ContainerComponentInterface) => {
-  return <Container fullCentralized={fullCentralized}>{children}</Container>;
+  return (
+    <Container
+      fullCentralized={fullCentralized}
+      fullHeight={fullHeight}
+      fullWidth={fullWidth}
+      displayFlex={displayFlex}
+      directionColumn={directionColumn}
+    >
+      {children}
+    </Container>
+  );
 };
 
 export default ContainerComponent;
