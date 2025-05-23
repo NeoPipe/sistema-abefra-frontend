@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import api from "../../config/api";
 import type { SignInInterface } from "../../models/interfaces/auth";
 
@@ -8,6 +9,8 @@ const signin = (data: SignInInterface) => {
     api.defaults.headers.common[
       "Authorization"
     ] = `Bearer ${res.data["accessToken"]}`;
+
+    toast.success("Usuário logado!");
   });
 };
 

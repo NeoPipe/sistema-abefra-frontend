@@ -6,6 +6,7 @@ interface ContainerInterface {
   fullCentralized?: boolean;
   displayFlex?: boolean;
   directionColumn?: boolean;
+  backgroundColor?: string;
 }
 
 const Container = styled.div<ContainerInterface>`

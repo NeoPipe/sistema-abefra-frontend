@@ -1,9 +1,16 @@
-const Home = () => {
+import Container from "../../components/atoms/Container";
+import Cell from "../../components/molecules/Cell";
+
+const HomeComponent = () => {
   return (
-    <div>
-      <h1>AAAAAAAA</h1>
-    </div>
+    <Container>
+      <Cell
+        description="Tung Tung Sahur"
+        quantity={20}
+        dueDate={new Date()}
+      ></Cell>
+    </Container>
   );
 };
 
-export default Home;
+export default HomeComponent;
