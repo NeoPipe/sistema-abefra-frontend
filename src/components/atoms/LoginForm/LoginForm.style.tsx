@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import { sizes, margins } from "../../../assets/styles/variables";
+import { margins, sizes } from "../../../assets/styles/variables";
 
 interface LoginFormInterface {
-  fullCentralized?: boolean;
+  $fullCentralized?: boolean;
 }
 
 const LoginForm = styled.form<LoginFormInterface>`

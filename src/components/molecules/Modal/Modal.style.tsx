@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { sizes } from "../../../assets/styles/variables";
 
 interface ModalInterface {
-  fullCentralized?: boolean;
+  $fullCentralized?: boolean;
 }
 
 const Modal = styled.div<ModalInterface>`

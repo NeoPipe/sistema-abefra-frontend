@@ -9,7 +9,6 @@ interface ContainerComponentInterface
   fullWidth?: boolean;
   displayFlex?: boolean;
   directionColumn?: boolean;
-  gap?: string;
 }
 
 const ContainerComponent = ({
@@ -22,11 +21,11 @@ const ContainerComponent = ({
 }: ContainerComponentInterface) => {
   return (
     <Container
-      fullCentralized={fullCentralized}
-      fullHeight={fullHeight}
-      fullWidth={fullWidth}
-      displayFlex={displayFlex}
-      directionColumn={directionColumn}
+      $fullCentralized={fullCentralized}
+      $fullHeight={fullHeight}
+      $fullWidth={fullWidth}
+      $displayFlex={displayFlex}
+      $directionColumn={directionColumn}
     >
       {children}
     </Container>
