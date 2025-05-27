@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { colors, fontSizes, sizes } from "../../../assets/styles/variables";
 
 interface InputInterface {
-  fullCentralized?: boolean;
+  $fullCentralized?: boolean;
 }
 
 const Input = styled.input<InputInterface>`

@@ -1,22 +1,32 @@
+import { HttpStatusCode } from "axios";
 import { useFormik } from "formik";
-import { signin } from "../../api/auth";
+import { margins } from "../../assets/styles/variables";
 import Button from "../../components/atoms/Button";
 import Container from "../../components/atoms/Container";
 import Input from "../../components/atoms/Input";
-import Typography from "../../components/atoms/Typography";
-import Logo from "../../components/atoms/Logo";
 import LoginForm from "../../components/atoms/LoginForm";
-
-import { margins } from "../../assets/styles/variables";
+import Logo from "../../components/atoms/Logo";
+import Typography from "../../components/atoms/Typography";
+import * as AuthService from "../../services/Auth";
+import { useNavigation } from "../../shared/useNavigation";
 
 const LoginComponent = () => {
+  const { goToHome } = useNavigation();
+
   const formik = useFormik({
     initialValues: {
       username: "",
       password: "",
     },
     onSubmit: (values) => {
-      signin({ username: values.username, password: values.password });
+      AuthService.signin({
+        username: values.username,
+        password: values.password,
+      }).then((res) => {
+        if (res == HttpStatusCode.Ok) {
+          goToHome();
+        }
+      });
     },
   });
 

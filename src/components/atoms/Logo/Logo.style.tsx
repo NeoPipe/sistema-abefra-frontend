@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import { sizes, colors, margins } from "../../../assets/styles/variables";
+import { colors, margins, sizes } from "../../../assets/styles/variables";
 
 interface LogoInterface {
-  fullCentralized?: boolean;
+  $fullCentralized?: boolean;
 }
 
 const Logo = styled.img<LogoInterface>`
