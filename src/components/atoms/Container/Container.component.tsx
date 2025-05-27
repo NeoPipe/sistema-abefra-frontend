@@ -10,6 +10,7 @@ interface ContainerComponentInterface
   displayFlex?: boolean;
   directionColumn?: boolean;
   gap?: string;
+  fluid?: boolean;
 }
 
 const ContainerComponent = ({
@@ -19,6 +20,7 @@ const ContainerComponent = ({
   fullWidth,
   displayFlex,
   directionColumn,
+  fluid,
 }: ContainerComponentInterface) => {
   return (
     <Container
@@ -27,6 +29,7 @@ const ContainerComponent = ({
       fullWidth={fullWidth}
       displayFlex={displayFlex}
       directionColumn={directionColumn}
+      fluid={fluid}
     >
       {children}
     </Container>

@@ -3,7 +3,7 @@ import Cell from "../../components/molecules/Cell";
 
 const HomeComponent = () => {
   return (
-    <Container>
+    <Container fullCentralized fullHeight fullWidth displayFlex directionColumn>
       <Cell
         description="Tung Tung Sahur"
         quantity={20}

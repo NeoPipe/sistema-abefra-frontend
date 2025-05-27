@@ -1,11 +1,6 @@
+import { Col, Row } from "react-grid-system";
 import Container from "../../atoms/Container";
 import Typography from "../../atoms/Typography";
-
-interface CellComponentInterface {
-  description: string;
-  quantity: number;
-  dueDate: Date;
-}
 
 const CellComponent = ({
   description,
@@ -14,9 +9,39 @@ const CellComponent = ({
 }: CellComponentInterface) => {
   return (
     <Container>
-      <Typography as="h2">{description}</Typography>
-      <Typography as="h3">{quantity}</Typography>
-      <Typography as="h3">{dueDate.getDate()}</Typography>
+      <Row>
+        <Col xs={6}>
+          <Row>
+            <Typography as="h2">{description}</Typography>
+          </Row>
+          <Row>
+            <Typography as="h3">{quantity}</Typography>
+          </Row>
+        </Col>
+
+        <Col xs={4}>
+          <Typography as="h3">{dueDate.getDate()}</Typography>
+        </Col>
+
+        <Col xs={2}>...</Col>
+      </Row>
+
+      <Row>
+        <Col xs={6}>
+          <Row>
+            <Typography as="h2">{description}</Typography>
+          </Row>
+          <Row>
+            <Typography as="h3">{quantity}</Typography>
+          </Row>
+        </Col>
+
+        <Col xs={4}>
+          <Typography as="h3">{dueDate.getDate()}</Typography>
+        </Col>
+
+        <Col xs={2}>...</Col>
+      </Row>
     </Container>
   );
 };

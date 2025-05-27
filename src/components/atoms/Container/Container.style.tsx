@@ -7,6 +7,7 @@ interface ContainerInterface {
   displayFlex?: boolean;
   directionColumn?: boolean;
   backgroundColor?: string;
+  fluid?: boolean;
 }
 
 const Container = styled.div<ContainerInterface>`
