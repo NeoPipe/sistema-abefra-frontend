@@ -1,1 +1,1 @@
-export { default } from "./DueWarning.component";
+export { default } from "./List.component";
