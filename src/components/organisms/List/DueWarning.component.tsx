@@ -1,5 +1,5 @@
 import type DueWarningComponent from ".";
-import Button from "../..//atoms/Button";
+import Button from "../../atoms/Button";
 
 const button = Button;
 

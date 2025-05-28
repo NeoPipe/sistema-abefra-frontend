@@ -24,12 +24,12 @@ const ContainerComponent = ({
 }: ContainerComponentInterface) => {
   return (
     <Container
-      fullCentralized={fullCentralized}
-      fullHeight={fullHeight}
-      fullWidth={fullWidth}
-      displayFlex={displayFlex}
-      directionColumn={directionColumn}
-      fluid={fluid}
+      $fullCentralized={fullCentralized}
+      $fullHeight={fullHeight}
+      $fullWidth={fullWidth}
+      $displayFlex={displayFlex}
+      $directionColumn={directionColumn}
+      $fluid={fluid}
     >
       {children}
     </Container>
