@@ -1,11 +1,15 @@
+import type { JSX } from "react";
 import Button from "../../atoms/Button";
 import Container from "../../atoms/Container/Container.style";
 import List, { ColWrapper, DueWrapper } from "./List.style";
 
 interface ListComponentInterface
-  extends React.ComponentPropsWithRef<typeof List> {}
+  extends React.ComponentPropsWithRef<typeof List> {
+  children: JSX.Element[];
+}
 
-const ListComponent = ({ ...rest }: ListComponentInterface) => {
+const ListComponent = ({ children, ...rest }: ListComponentInterface) => {
+  // const listChildren
   return (
     <Container>
       <DueWrapper>
@@ -21,7 +25,11 @@ const ListComponent = ({ ...rest }: ListComponentInterface) => {
       </DueWrapper>
 
       <Container>
-        <List {...rest}></List>;
+        <List {...rest}>
+          {children.map((c) => {
+            return c;
+          })}
+        </List>
       </Container>
     </Container>
   );
