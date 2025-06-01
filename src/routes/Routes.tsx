@@ -15,7 +15,11 @@ const AppRoutes = () => {
               <Home />
             </MainPageTemplate>
           }
-        ></Route>
+        />
+        <Route
+          path="/stock"
+          element={<MainPageTemplate pageName="Estoque"></MainPageTemplate>}
+        />
       </Routes>
     </BrowserRouter>
   );
