@@ -11,36 +11,36 @@ const HomeComponent = () => {
       quantity: 3,
       dueDate: new Date(),
     },
-    {
-      id: 2,
-      description: "Leite ninho",
-      quantity: 3,
-      dueDate: new Date(),
-    },
-    {
-      id: 3,
-      description: "Leite ninho",
-      quantity: 3,
-      dueDate: new Date(),
-    },
-    {
-      id: 4,
-      description: "Leite ninho",
-      quantity: 3,
-      dueDate: new Date(),
-    },
-    {
-      id: 5,
-      description: "Leite ninho",
-      quantity: 3,
-      dueDate: new Date(),
-    },
-    {
-      id: 6,
-      description: "Leite ninho",
-      quantity: 3,
-      dueDate: new Date(),
-    },
+    // {
+    //   id: 2,
+    //   description: "Leite ninho",
+    //   quantity: 3,
+    //   dueDate: new Date(),
+    // },
+    // {
+    //   id: 3,
+    //   description: "Leite ninho",
+    //   quantity: 3,
+    //   dueDate: new Date(),
+    // },
+    // {
+    //   id: 4,
+    //   description: "Leite ninho",
+    //   quantity: 3,
+    //   dueDate: new Date(),
+    // },
+    // {
+    //   id: 5,
+    //   description: "Leite ninho",
+    //   quantity: 3,
+    //   dueDate: new Date(),
+    // },
+    // {
+    //   id: 6,
+    //   description: "Leite ninho",
+    //   quantity: 3,
+    //   dueDate: new Date(),
+    // },
   ];
 
   const listStockProducts = stockProducts.map((c) => (
