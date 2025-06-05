@@ -1,15 +1,25 @@
 import styled from "styled-components";
-import { colors, sizes, fontSizes } from "../../../assets/styles/variables";
+import { colors, fontSizes, sizes } from "../../../assets/styles/variables";
 
-const defaultConfig = styled.button`
+interface ButtonInterface {
+  $hideButton?: boolean;
+}
+
+const defaultConfig = styled.button<ButtonInterface>`
   border: none;
 
   background-color: ${colors.darkGreen};
   color: ${colors.white};
 
+  width: ${sizes.size100Percent};
   height: ${sizes.size40};
   border-radius: ${sizes.size5};
   font-size: ${fontSizes.fontSize18};
+
+  display: ${({ $hideButton }: ButtonInterface) =>
+    !$hideButton ? "block" : "none"};
+
+  cursor: pointer;
 `;
 
 export const MainButton = styled(defaultConfig)``;

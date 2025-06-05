@@ -8,7 +8,7 @@ interface NavigationBarInterface {
 
 const NavigationBar = styled.div<NavigationBarInterface>`
   display: flex;
-  position: fixed;
+  /* position: fixed; */
   align-items: center;
   background-color: ${colors.darkGreen};
   justify-content: center;
