@@ -7,6 +7,9 @@ interface ColorsInterface {
   white: string;
   black: string;
   blackOpacity: string;
+  darkOrange: string;
+  mediumOrange: string;
+  lightOrange: string;
 }
 
 interface FontSizesInterface {
@@ -133,6 +136,9 @@ export const colors: ColorsInterface = {
   white: "#FFF",
   black: "#000",
   blackOpacity: "#0000004D",
+  darkOrange: "#FFA000",
+  mediumOrange: "#FFB73F",
+  lightOrange: "#FED187"
 };
 
 export const zIndex: ZIndexInterface = {

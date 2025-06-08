@@ -13,7 +13,7 @@ const defaultConfig = styled.button<ButtonInterface>`
 
   width: ${sizes.size100Percent};
   height: ${sizes.size40};
-  border-radius: ${sizes.size5};
+  border-radius: ${sizes.size10};
   font-size: ${fontSizes.fontSize18};
 
   display: ${({ $hideButton }: ButtonInterface) =>

@@ -1,55 +1,109 @@
 import { Container } from "react-grid-system";
+import { Link } from "react-router-dom";
 import Button from "../../components/atoms/Button";
-import Input from "../../components/atoms/Input";
-import Cell from "../../components/molecules/Cell";
-import List from "../../components/organisms/List/List.style";
-import { ColWrapper, SearchWrapper, StockButtonWrapper } from "./Home.style";
+import Typography from "../../components/atoms/Typography";
+import { useState } from "react";
+
+import {
+  sizes,
+  fontSizes,
+  margins,
+  colors,
+} from "../../assets/styles/variables";
+import SearchInput from "../../components/molecules/SearchInput";
+import ListComponent from "../../components/molecules/List";
 
 const Home = () => {
-  const stockProducts = [
-    {
-      id: 1,
-      description: "Leite ninho",
-      quantity: 3,
-      dueDate: new Date(),
-    },
+  const productsByExpiration = [
+    { description: "Milk (1L carton)", quantity: 2, dueDate: "06/06" },
+    { description: "Eggs (dozen)", quantity: 1, dueDate: "10/06" },
+    { description: "Fresh strawberries", quantity: 3, dueDate: "05/06" },
+    { description: "Cheddar cheese block", quantity: 1, dueDate: "20/06" },
+    { description: "Spinach (bag)", quantity: 2, dueDate: "07/06" },
+    { description: "Yogurt (individual cups)", quantity: 6, dueDate: "12/06" },
+    { description: "Chicken breast (frozen)", quantity: 4, dueDate: "30/06" },
+    { description: "Canned beans", quantity: 5, dueDate: "03/07" },
+    { description: "Bread (whole grain loaf)", quantity: 1, dueDate: "08/06" },
+    { description: "Apples", quantity: 6, dueDate: "18/06" },
   ];
 
-  const listStockProducts = stockProducts.map((c) => (
-    <Cell
-      key={c.id}
-      description={c.description}
-      quantity={c.quantity}
-      dueDate={c.dueDate}
-    ></Cell>
-  ));
+  const buttonList = [
+    { text: "7 DIAS", color: colors.darkOrange, option: 0 },
+    { text: "10 DIAS", color: colors.mediumOrange, option: 1 },
+    { text: "15 DIAS", color: colors.lightOrange, option: 2 },
+  ];
+
+  const [selectedOption, setSelectedOption] = useState(0);
 
   return (
-    <Container>
-      <SearchWrapper>
-        <ColWrapper xs={8}>
-          <Input placeholder="Pesquisar" />
-        </ColWrapper>
-        <ColWrapper xs={4} style={{ display: "flex", width: "100%" }}>
-          <Button>Filtros</Button>
-        </ColWrapper>
-      </SearchWrapper>
-      <StockButtonWrapper>
-        <Button>Estoque</Button>
-      </StockButtonWrapper>
+    <>
+      <Container
+        style={{
+          width: sizes.size90Percent,
+          height: sizes.size80,
+          margin: "0 auto",
 
-      <Container>
-        <Container>
-          <Button>7 DIAS</Button>
-          <Button>10 DIAS</Button>
-          <Button>15 DIAS</Button>
-        </Container>
-
-        <Container>
-          <List>{listStockProducts}</List>
-        </Container>
+          display: "flex",
+          alignItems: "center",
+          gap: margins.marginSm,
+        }}
+      >
+        <SearchInput />
+        <Button
+          style={{ width: sizes.size100, fontSize: fontSizes.fontSize16 }}
+        >
+          Filtros
+        </Button>
       </Container>
-    </Container>
+
+      <Container style={{ height: sizes.size80 }}>
+        <Link to="/stock" style={{ textDecorationLine: "none" }}>
+          <Button style={{ fontSize: fontSizes.fontSize16 }}>Estoque</Button>
+        </Link>
+      </Container>
+
+      <Typography
+        as="h2"
+        style={{
+          fontWeight: "normal",
+          textAlign: "center",
+          marginBottom: margins.marginSm,
+        }}
+      >
+        Próximo do vencimento
+      </Typography>
+
+      <Container
+        style={{
+          backgroundColor:
+            selectedOption === 0
+              ? colors.darkOrange
+              : selectedOption === 1
+              ? colors.mediumOrange
+              : selectedOption === 2
+              ? colors.lightOrange
+              : "",
+        }}
+      >
+        <Container style={{ display: "flex" }}>
+          {buttonList.map((item) => (
+            <Button
+              onClick={() => setSelectedOption(item.option)}
+              style={{
+                backgroundColor: item.color,
+                color: colors.black,
+                height: sizes.size60,
+                fontSize: fontSizes.fontSize16,
+              }}
+            >
+              {item.text}
+            </Button>
+          ))}
+        </Container>
+
+        <ListComponent data={productsByExpiration}></ListComponent>
+      </Container>
+    </>
   );
 };
 
