@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import MainPageTemplate from "../components/templates/MainPageTemplate";
+import Stock from "../pages/Stock";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 
@@ -18,7 +19,11 @@ const AppRoutes = () => {
         />
         <Route
           path="/stock"
-          element={<MainPageTemplate pageName="Estoque"></MainPageTemplate>}
+          element={
+            <MainPageTemplate pageName="Estoque">
+              <Stock />
+            </MainPageTemplate>
+          }
         />
       </Routes>
     </BrowserRouter>
