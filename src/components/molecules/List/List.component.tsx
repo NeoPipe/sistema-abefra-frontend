@@ -10,8 +10,6 @@ interface ListComponentInterface
 }
 
 const ListComponent = ({ data }: ListComponentInterface) => {
-  console.log(data);
-
   return (
     <List>
       {data.map((item) => (

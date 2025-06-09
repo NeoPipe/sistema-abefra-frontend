@@ -1,8 +1,9 @@
-import { Container } from "react-grid-system";
 import { Link } from "react-router-dom";
 import Button from "../../components/atoms/Button";
 import Typography from "../../components/atoms/Typography";
 import { useState } from "react";
+
+import { SearchWrapper, ListContainer, ButtonWrapper } from "./Home.style";
 
 import {
   sizes,
@@ -37,30 +38,23 @@ const Home = () => {
 
   return (
     <>
-      <Container
-        style={{
-          width: sizes.size90Percent,
-          height: sizes.size80,
-          margin: "0 auto",
-
-          display: "flex",
-          alignItems: "center",
-          gap: margins.marginSm,
-        }}
-      >
+      <SearchWrapper>
         <SearchInput />
         <Button
           style={{ width: sizes.size100, fontSize: fontSizes.fontSize16 }}
         >
           Filtros
         </Button>
-      </Container>
+      </SearchWrapper>
 
-      <Container style={{ height: sizes.size80 }}>
-        <Link to="/stock" style={{ textDecorationLine: "none" }}>
+      <SearchWrapper>
+        <Link
+          to="/stock"
+          style={{ textDecorationLine: "none", width: sizes.size100Percent }}
+        >
           <Button style={{ fontSize: fontSizes.fontSize16 }}>Estoque</Button>
         </Link>
-      </Container>
+      </SearchWrapper>
 
       <Typography
         as="h2"
@@ -73,7 +67,7 @@ const Home = () => {
         Próximo do vencimento
       </Typography>
 
-      <Container
+      <ListContainer
         style={{
           backgroundColor:
             selectedOption === 0
@@ -85,7 +79,7 @@ const Home = () => {
               : "",
         }}
       >
-        <Container style={{ display: "flex" }}>
+        <ButtonWrapper style={{ display: "flex" }}>
           {buttonList.map((item) => (
             <Button
               onClick={() => setSelectedOption(item.option)}
@@ -99,10 +93,10 @@ const Home = () => {
               {item.text}
             </Button>
           ))}
-        </Container>
+        </ButtonWrapper>
 
         <ListComponent data={productsByExpiration}></ListComponent>
-      </Container>
+      </ListContainer>
     </>
   );
 };
