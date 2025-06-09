@@ -1,5 +1,8 @@
 import { useState } from "react";
 import Container from "../../components/atoms/Container";
+import ButtonComponent from "../../components/atoms/Button";
+import { ButtonWrapper } from "./Stock.style";
+import ListComponent from "../../components/molecules/List";
 
 const Stock = () => {
   const [productList, setProductList] = useState([
@@ -17,8 +20,12 @@ const Stock = () => {
 
   return (
     <Container>
-      <h1>teste</h1>
-      <p>paragraafo</p>
+      <ButtonWrapper>
+        <ButtonComponent>Adicionar</ButtonComponent>
+        <ButtonComponent>Cadastrar</ButtonComponent>
+      </ButtonWrapper>
+
+      <ListComponent data={productList}></ListComponent>
     </Container>
   );
 };
