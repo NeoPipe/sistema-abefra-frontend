@@ -1,27 +1,23 @@
-import { Col, Row } from "react-grid-system";
 import styled from "styled-components";
+import { sizes, margins } from "../../assets/styles/variables";
 
-interface ColWrapperInterface {
-  $centralized?: boolean;
-}
+export const SearchWrapper = styled.div`
+  width: ${sizes.size100Percent};
+  padding: 0 ${margins.marginMd};
+  margin: ${margins.marginMd} 0;
 
-const ColWrapper = styled(Col)<ColWrapperInterface>`
   display: flex;
-  width: 80%;
-  /* justify-content: ${({ $centralized }: ColWrapperInterface) =>
-    !$centralized ? "" : "center"}; */
+  flex-direction: space-between;
+  gap: ${margins.marginLg};
 `;
 
-const SearchWrapper = styled(Row)`
-  margin: 1vh;
-  display: flex;
-  justify-content: space-between;
+export const ListContainer = styled.div`
+  width: ${sizes.size100Percent};
+  border-top-left-radius: ${sizes.size10};
+  border-top-right-radius: ${sizes.size10};
 `;
 
-const StockButtonWrapper = styled(Row)`
+export const ButtonWrapper = styled.div`
+  width: ${sizes.size100Percent};
   display: flex;
-  justify-content: center;
-  background-color: pink;
 `;
-
-export { ColWrapper, SearchWrapper, StockButtonWrapper };
