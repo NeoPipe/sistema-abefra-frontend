@@ -1,12 +1,11 @@
-import type { JSX } from "react";
 import List from "./List.style";
 
+import type { StockProductInterface } from "../../../models/interfaces/stock-product";
 import ListItem from "../../atoms/ListItem";
 
 interface ListComponentInterface
   extends React.ComponentPropsWithRef<typeof List> {
-  // children: JSX.Element[];
-  data: Array<object>;
+  data: StockProductInterface[];
 }
 
 const ListComponent = ({ data }: ListComponentInterface) => {
