@@ -1,7 +1,7 @@
 import type { SignInResponseInterface } from "../auth";
 
 interface StockProductInterface {
-  description: string;
+  productDescription: string;
   quantity: number;
   dueDate: string;
 }
