@@ -14,14 +14,14 @@ const Stock = () => {
       Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
     },
   };
-  const getProducts = async () => {
+  const getStock = async () => {
     axios
       .get("https://sistema-abefra-backend.onrender.com/v1/stock", config)
       .then((res) => setStockList(res.data.data));
   };
 
   useEffect(() => {
-    getProducts();
+    getStock();
   }, []);
 
   return (
