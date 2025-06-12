@@ -1,5 +1,3 @@
-import { HttpStatusCode } from "axios";
-import { useFormik } from "formik";
 import { margins } from "../../assets/styles/variables";
 import Button from "../../components/atoms/Button";
 import Container from "../../components/atoms/Container";
@@ -7,28 +5,31 @@ import Input from "../../components/atoms/Input";
 import LoginForm from "../../components/atoms/LoginForm";
 import Logo from "../../components/atoms/Logo";
 import Typography from "../../components/atoms/Typography";
-import * as AuthService from "../../services/Auth";
+// import * as AuthService from "../../services/Auth";
 import { useNavigation } from "../../shared/useNavigation";
+import axios from "axios";
+
+import { useState } from "react";
 
 const LoginComponent = () => {
   const { goToHome } = useNavigation();
 
-  const formik = useFormik({
-    initialValues: {
-      username: "",
-      password: "",
-    },
-    onSubmit: (values) => {
-      AuthService.signin({
-        username: values.username,
-        password: values.password,
-      }).then((res) => {
-        if (res == HttpStatusCode.Ok) {
-          goToHome();
-        }
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const signIn = async (event) => {
+    event.preventDefault();
+
+    await axios
+      .post("https://sistema-abefra-backend.onrender.com/v1/auth/login", {
+        username,
+        password,
+      })
+      .then((res) => {
+        localStorage.setItem("accessToken", res.data.accessToken);
+        goToHome();
       });
-    },
-  });
+  };
 
   return (
     <Container fullCentralized fullHeight fullWidth displayFlex directionColumn>
@@ -36,18 +37,22 @@ const LoginComponent = () => {
       <Typography as="h1" marginBottom={margins.marginMd} fullCentralized>
         Sistema ABEFRA
       </Typography>
-      <LoginForm action="" onSubmit={formik.handleSubmit}>
+      <LoginForm action="">
         <Input
           placeholder="Usuário"
           id="username"
-          onChange={formik.handleChange}
+          onChange={(e) => setUsername(e.target.value)}
+          value={username}
         ></Input>
         <Input
           placeholder="Senha"
           id="password"
-          onChange={formik.handleChange}
+          onChange={(e) => setPassword(e.target.value)}
+          value={password}
         ></Input>
-        <Button type="submit">Entrar</Button>
+        <Button type="submit" onClick={() => signIn(event)}>
+          Entrar
+        </Button>
       </LoginForm>
     </Container>
   );

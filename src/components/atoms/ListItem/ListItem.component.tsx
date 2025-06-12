@@ -3,26 +3,27 @@ import { Item, InfoWrapper, OptionsIcon } from "./ListItem.style";
 
 interface ListItemInterface {
   itemInfo: {
-    description: string;
+    productDescription: string;
     quantity: number;
     dueDate: string;
   };
 }
 
 const ListItem = ({ itemInfo }: ListItemInterface) => {
-  const { description, quantity, dueDate } = itemInfo;
+  const { productDescription, quantity, dueDate } = itemInfo;
+  const formattedDueDate = dueDate.slice(5, -14).replace("-", "/");
 
   return (
     <Item>
       <InfoWrapper>
         <div>
-          <p>{description}</p>
+          <p>{productDescription}</p>
           <span>
             {quantity} unidade{quantity !== 1 ? "s" : ""}
           </span>
         </div>
         <div>
-          <p>Venc: {dueDate}</p>
+          <p>Venc: {formattedDueDate}</p>
         </div>
       </InfoWrapper>
       <OptionsIcon>

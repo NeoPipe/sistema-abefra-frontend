@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Button from "../../components/atoms/Button";
 import Typography from "../../components/atoms/Typography";
@@ -15,26 +15,74 @@ import ListComponent from "../../components/molecules/List";
 import SearchInput from "../../components/molecules/SearchInput";
 import type { StockProductInterface } from "../../models/interfaces/stock-product";
 
+import axios from "axios";
+
 const Home = () => {
-  const productsByExpiration: StockProductInterface[] = [
-    { description: "Milk (1L carton)", quantity: 2, dueDate: "06/06" },
-    { description: "Eggs (dozen)", quantity: 1, dueDate: "10/06" },
-    { description: "Fresh strawberries", quantity: 3, dueDate: "05/06" },
-    { description: "Cheddar cheese block", quantity: 1, dueDate: "20/06" },
-    { description: "Spinach (bag)", quantity: 2, dueDate: "07/06" },
-    { description: "Yogurt (individual cups)", quantity: 6, dueDate: "12/06" },
-    { description: "Chicken breast (frozen)", quantity: 4, dueDate: "30/06" },
-    { description: "Canned beans", quantity: 5, dueDate: "03/07" },
-    { description: "Bread (whole grain loaf)", quantity: 1, dueDate: "08/06" },
-    { description: "Apples", quantity: 6, dueDate: "18/06" },
-  ];
+  const [productList, setProductList] = useState([]);
+  const [productsByExpiration, setProductsByExpiration] = useState([]);
 
+  const config = {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+    },
+  };
+  useEffect(() => {
+    async function fetchData() {
+      await axios
+        .get("https://sistema-abefra-backend.onrender.com/v1/stock", config)
+        .then((res) => setProductList(res.data.data));
+    }
+    fetchData();
+  }, []);
+
+  const filterByExpirationDate = (days) => {
+    const currentTimestamp = Date.now();
+    let filteredList;
+
+    if (days === oneDayInMs * 7) {
+      filteredList = productList.filter(
+        (item) => Date.parse(item.dueDate) - currentTimestamp < days
+      );
+    } else if (days === oneDayInMs * 10) {
+      filteredList = productList.filter(
+        (item) =>
+          Date.parse(item.dueDate) - currentTimestamp < days &&
+          Date.parse(item.dueDate) - currentTimestamp > oneDayInMs * 7
+      );
+    } else if (days === oneDayInMs * 15) {
+      filteredList = productList.filter(
+        (item) =>
+          Date.parse(item.dueDate) - currentTimestamp < days &&
+          Date.parse(item.dueDate) - currentTimestamp > oneDayInMs * 10
+      );
+    }
+
+    filteredList.sort((a, b) => a.dueDate.localeCompare(b.dueDate));
+
+    setProductsByExpiration(filteredList);
+  };
+
+  const oneDayInMs = 24 * 60 * 60 * 1000;
   const buttonList = [
-    { text: "7 DIAS", color: colors.darkOrange, option: 0 },
-    { text: "10 DIAS", color: colors.mediumOrange, option: 1 },
-    { text: "15 DIAS", color: colors.lightOrange, option: 2 },
+    {
+      text: "7 DIAS",
+      color: colors.darkOrange,
+      option: 0,
+      days: oneDayInMs * 7,
+    },
+    {
+      text: "10 DIAS",
+      color: colors.mediumOrange,
+      option: 1,
+      days: oneDayInMs * 10,
+    },
+    {
+      text: "15 DIAS",
+      color: colors.lightOrange,
+      option: 2,
+      days: oneDayInMs * 15,
+    },
   ];
-
   const [selectedOption, setSelectedOption] = useState(0);
 
   return (
@@ -83,7 +131,10 @@ const Home = () => {
         <ButtonWrapper style={{ display: "flex" }}>
           {buttonList.map((item) => (
             <Button
-              onClick={() => setSelectedOption(item.option)}
+              onClick={() => {
+                setSelectedOption(item.option);
+                filterByExpirationDate(item.days);
+              }}
               style={{
                 backgroundColor: item.color,
                 color: colors.black,
