@@ -1,21 +1,22 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import Button from "../../components/atoms/Button";
 import Typography from "../../components/atoms/Typography";
-import { useState } from "react";
 
-import { SearchWrapper, ListContainer, ButtonWrapper } from "./Home.style";
+import { ButtonWrapper, ListContainer, SearchWrapper } from "./Home.style";
 
 import {
-  sizes,
+  colors,
   fontSizes,
   margins,
-  colors,
+  sizes,
 } from "../../assets/styles/variables";
-import SearchInput from "../../components/molecules/SearchInput";
 import ListComponent from "../../components/molecules/List";
+import SearchInput from "../../components/molecules/SearchInput";
+import type { StockProductInterface } from "../../models/interfaces/stock-product";
 
 const Home = () => {
-  const productsByExpiration = [
+  const productsByExpiration: StockProductInterface[] = [
     { description: "Milk (1L carton)", quantity: 2, dueDate: "06/06" },
     { description: "Eggs (dozen)", quantity: 1, dueDate: "10/06" },
     { description: "Fresh strawberries", quantity: 3, dueDate: "05/06" },
