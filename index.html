@@ -1,75 +1,13 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Abefra</title>
-
-    <link rel="stylesheet" href="style.css">
-</head>
-
-<body>
-    <header>
-        <h1>Inventário de Alimentos</h1>
-    </header>
-
-    <main>
-        <section>
-            <h2>Adicionar Alimento</h2>
-            <p>Preencha os detalhes do alimento que deseja adicionar ao inventário.</p>
-            <form id="foodForm">
-                <label for="name">Nome:</label>
-                <input type="text" id="name" name="name" required>
-
-                <label for="quantity">Quantidade:</label>
-                <input type="number" id="quantity" name="quantity" required>
-
-                <label for="expiration">Data de Validade:</label>
-                <input type="date" id="expiration" name="expiration" required>
-
-                <label for="currentDate">Data de Recebimento:</label>
-                <input type="date" id="currentDate" name="currentDate" value="" readonly>
-
-                <button type="submit">Adicionar</button>
-            </form>
-        </section>
-
-        <section>
-            <ul id="inventoryList">
-
-            </ul>
-        </section>
-    </main>
-
-    <script>
-        const inventoryList = document.getElementById('inventoryList');
-        const items = [
-            { name: 'Item1', quantity: 10, expiration: '28-04-2025', inputDate: '22-04-2025' },
-            { name: 'Item2', quantity: 6, expiration: '26-04-2025', inputDate: '22-04-2025' },
-            { name: 'Item3', quantity: 5, expiration: '29-04-2025', inputDate: '22-04-2025' },
-            { name: 'Item4', quantity: 2, expiration: '05-05-2025', inputDate: '22-04-2025' },
-            { name: 'Item5', quantity: 3, expiration: '24-04-2025', inputDate: '22-04-2025' },
-            { name: 'Item6', quantity: 12, expiration: '03-05-2025', inputDate: '22-04-2025' }
-        ];
-
-        inventoryList.innerHTML = `
-            <div class="table-header">
-                <span>Nome</span>
-                <span>Quantidade</span>
-                <span>Data de Validade</span>
-            </div>
-            `;
-        items.forEach(item => {
-            const li = document.createElement('li');
-            li.innerHTML = `
-                <span>${item.name}</span>
-                <span>${item.quantity}</span>
-                <span>${item.expiration}</span>
-            `;
-            inventoryList.appendChild(li);
-        });
-    </script>
-</body>
-
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + React + TS</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
 </html>
