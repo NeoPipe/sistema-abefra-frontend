@@ -4,24 +4,18 @@ import ButtonComponent from "../../components/atoms/Button";
 import { ButtonWrapper } from "./Stock.style";
 import ListComponent from "../../components/molecules/List";
 
-import axios from "axios";
+import { getStock } from "../../services/Stock";
 
 const Stock = () => {
   const [stockList, setStockList] = useState([]);
 
-  const config = {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-    },
-  };
-  const getStock = async () => {
-    axios
-      .get("https://sistema-abefra-backend.onrender.com/v1/stock", config)
-      .then((res) => setStockList(res.data.data));
+  const fetchData = async () => {
+    const response = await getStock();
+    setStockList(response.data);
   };
 
   useEffect(() => {
-    getStock();
+    fetchData();
   }, []);
 
   return (

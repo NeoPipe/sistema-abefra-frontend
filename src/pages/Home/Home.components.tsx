@@ -13,54 +13,20 @@ import {
 } from "../../assets/styles/variables";
 import ListComponent from "../../components/molecules/List";
 import SearchInput from "../../components/molecules/SearchInput";
-import type { StockProductInterface } from "../../models/interfaces/stock-product";
 
-import axios from "axios";
+import { getStockByDate } from "../../services/Stock";
 
 const Home = () => {
-  const [productList, setProductList] = useState([]);
   const [productsByExpiration, setProductsByExpiration] = useState([]);
 
-  const config = {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-    },
+  const fetchData = async (startDate: number, endDate: number) => {
+    const response = await getStockByDate(startDate, endDate);
+    setProductsByExpiration(response.data);
   };
+
   useEffect(() => {
-    async function fetchData() {
-      await axios
-        .get("https://sistema-abefra-backend.onrender.com/v1/stock", config)
-        .then((res) => setProductList(res.data.data));
-    }
-    fetchData();
+    fetchData(0, oneDayInMs * 7);
   }, []);
-
-  const filterByExpirationDate = (days) => {
-    const currentTimestamp = Date.now();
-    let filteredList;
-
-    if (days === oneDayInMs * 7) {
-      filteredList = productList.filter(
-        (item) => Date.parse(item.dueDate) - currentTimestamp < days
-      );
-    } else if (days === oneDayInMs * 10) {
-      filteredList = productList.filter(
-        (item) =>
-          Date.parse(item.dueDate) - currentTimestamp < days &&
-          Date.parse(item.dueDate) - currentTimestamp > oneDayInMs * 7
-      );
-    } else if (days === oneDayInMs * 15) {
-      filteredList = productList.filter(
-        (item) =>
-          Date.parse(item.dueDate) - currentTimestamp < days &&
-          Date.parse(item.dueDate) - currentTimestamp > oneDayInMs * 10
-      );
-    }
-
-    filteredList.sort((a, b) => a.dueDate.localeCompare(b.dueDate));
-
-    setProductsByExpiration(filteredList);
-  };
 
   const oneDayInMs = 24 * 60 * 60 * 1000;
   const buttonList = [
@@ -68,19 +34,22 @@ const Home = () => {
       text: "7 DIAS",
       color: colors.darkOrange,
       option: 0,
-      days: oneDayInMs * 7,
+      startDate: 0,
+      endDate: oneDayInMs * 7,
     },
     {
       text: "10 DIAS",
       color: colors.mediumOrange,
       option: 1,
-      days: oneDayInMs * 10,
+      startDate: oneDayInMs * 7,
+      endDate: oneDayInMs * 10,
     },
     {
       text: "15 DIAS",
       color: colors.lightOrange,
       option: 2,
-      days: oneDayInMs * 15,
+      startDate: oneDayInMs * 10,
+      endDate: oneDayInMs * 15,
     },
   ];
   const [selectedOption, setSelectedOption] = useState(0);
@@ -133,7 +102,7 @@ const Home = () => {
             <Button
               onClick={() => {
                 setSelectedOption(item.option);
-                filterByExpirationDate(item.days);
+                fetchData(item.startDate, item.endDate);
               }}
               style={{
                 backgroundColor: item.color,

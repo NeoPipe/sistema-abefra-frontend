@@ -3,6 +3,7 @@ import { Item, InfoWrapper, OptionsIcon } from "./ListItem.style";
 
 interface ListItemInterface {
   itemInfo: {
+    id: string;
     productDescription: string;
     quantity: number;
     dueDate: string;
@@ -10,11 +11,11 @@ interface ListItemInterface {
 }
 
 const ListItem = ({ itemInfo }: ListItemInterface) => {
-  const { productDescription, quantity, dueDate } = itemInfo;
+  const { id, productDescription, quantity, dueDate } = itemInfo;
   const formattedDueDate = dueDate.slice(5, -14).replace("-", "/");
 
   return (
-    <Item>
+    <Item key={id}>
       <InfoWrapper>
         <div>
           <p>{productDescription}</p>

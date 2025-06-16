@@ -4,10 +4,11 @@ import Container from "../../components/atoms/Container";
 import Input from "../../components/atoms/Input";
 import LoginForm from "../../components/atoms/LoginForm";
 import Logo from "../../components/atoms/Logo";
+import abefraPicture from "../../assets/images/abefra-picture.jpg";
 import Typography from "../../components/atoms/Typography";
-// import * as AuthService from "../../services/Auth";
+
+import * as AuthService from "../../services/Auth";
 import { useNavigation } from "../../shared/useNavigation";
-import axios from "axios";
 
 import { useState } from "react";
 
@@ -20,20 +21,13 @@ const LoginComponent = () => {
   const signIn = async (event) => {
     event.preventDefault();
 
-    await axios
-      .post("https://sistema-abefra-backend.onrender.com/v1/auth/login", {
-        username,
-        password,
-      })
-      .then((res) => {
-        localStorage.setItem("accessToken", res.data.accessToken);
-        goToHome();
-      });
+    const statusCode = await AuthService.signin({ username, password });
+    if (statusCode === 200) goToHome();
   };
 
   return (
     <Container fullCentralized fullHeight fullWidth displayFlex directionColumn>
-      <Logo src="https://img.cancaonova.com/cnimages/canais/uploads/sites/2/2022/10/S%C3%A3o-Francisco-de-Assis-300-x-300-1.jpg" />
+      <Logo src={abefraPicture} />
       <Typography as="h1" marginBottom={margins.marginMd} fullCentralized>
         Sistema ABEFRA
       </Typography>
@@ -45,6 +39,7 @@ const LoginComponent = () => {
           value={username}
         ></Input>
         <Input
+          type="password"
           placeholder="Senha"
           id="password"
           onChange={(e) => setPassword(e.target.value)}
