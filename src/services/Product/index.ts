@@ -3,9 +3,23 @@ import type { SignInResponseInterface } from "../../models/interfaces/auth";
 
 const path = "/v1/products";
 
-const getAll = async () =>
-  await api.get<SignInResponseInterface>(path).then((res) => {
-    console.log(res.data);
+const getProducts = async () => {
+  const response = await api.get<SignInResponseInterface>(path).then((res) => {
+    return res.data;
   });
 
-export { getAll };
+  return response;
+}
+
+const postProduct = async (description: string) => {
+  console.log(description);
+
+  const response = await api.post(path, {description: description}).then(res => {
+    console.log(res);
+    return res.data
+  });
+
+  return response;
+}
+
+export { getProducts, postProduct };

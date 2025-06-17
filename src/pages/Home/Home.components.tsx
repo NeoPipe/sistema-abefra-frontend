@@ -100,6 +100,7 @@ const Home = () => {
         <ButtonWrapper style={{ display: "flex" }}>
           {buttonList.map((item) => (
             <Button
+              key={item.option}
               onClick={() => {
                 setSelectedOption(item.option);
                 fetchData(item.startDate, item.endDate);

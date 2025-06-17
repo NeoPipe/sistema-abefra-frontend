@@ -1,5 +1,18 @@
 import { FaEllipsisH } from "react-icons/fa";
-import { Item, InfoWrapper, OptionsIcon } from "./ListItem.style";
+import { Item, InfoWrapper, OptionsIcon, ItemOptions } from "./ListItem.style";
+import { colors, fontSizes, sizes } from "../../../assets/styles/variables";
+
+import { useState } from "react";
+import { IoClose } from "react-icons/io5";
+import Modal from "react-modal";
+
+import TypographyComponent from "../Typography";
+import ButtonComponent from "../Button";
+import {
+  ModalContainer,
+  ModalTitle,
+  ExitModal,
+} from "../../../pages/Stock/Stock.style";
 
 interface ListItemInterface {
   itemInfo: {
@@ -14,6 +27,23 @@ const ListItem = ({ itemInfo }: ListItemInterface) => {
   const { id, productDescription, quantity, dueDate } = itemInfo;
   const formattedDueDate = dueDate.slice(5, -14).replace("-", "/");
 
+  const [showItemOptions, setShowItemOptions] = useState("none");
+  const [excluirIsOpen, setExcluirIsOpen] = useState(false);
+  const [editarIsOpen, setEditarIsOpen] = useState(false);
+  const [quantityInput, setQuantityInput] = useState(quantity);
+
+  const customStyles = {
+    content: {
+      width: sizes.size50Percent,
+      height: sizes.size50Percent,
+      top: sizes.size50Percent,
+      left: sizes.size50Percent,
+      right: "auto",
+      bottom: "auto",
+      transform: "translate(-50%, -50%)",
+    },
+  };
+
   return (
     <Item key={id}>
       <InfoWrapper>
@@ -27,9 +57,56 @@ const ListItem = ({ itemInfo }: ListItemInterface) => {
           <p>Venc: {formattedDueDate}</p>
         </div>
       </InfoWrapper>
-      <OptionsIcon>
+      <OptionsIcon onClick={() => setShowItemOptions("flex")}>
         <FaEllipsisH />
       </OptionsIcon>
+
+      <ItemOptions style={{ display: showItemOptions }}>
+        <button onClick={() => setEditarIsOpen(true)}>Editar</button>
+        <button onClick={() => setExcluirIsOpen(true)}>Excluir</button>
+        <div onClick={() => setShowItemOptions("none")}>
+          <IoClose fontSize={fontSizes.fontSize32} color={colors.white} />
+        </div>
+      </ItemOptions>
+
+      <Modal isOpen={excluirIsOpen} style={customStyles} ariaHideApp={false}>
+        <ModalContainer>
+          <div>
+            <ModalTitle>
+              <TypographyComponent as="h4">Excluir produto</TypographyComponent>
+              <ExitModal onClick={() => setExcluirIsOpen(false)}>
+                <IoClose fontSize={fontSizes.fontSize24} color={colors.white} />
+              </ExitModal>
+            </ModalTitle>
+            <p>Confirmar exclusão do produto: {productDescription}</p>
+          </div>
+          <ButtonComponent onClick={() => {}}>Excluir</ButtonComponent>
+        </ModalContainer>
+      </Modal>
+
+      <Modal isOpen={editarIsOpen} style={customStyles} ariaHideApp={false}>
+        <ModalContainer>
+          <div>
+            <ModalTitle>
+              <TypographyComponent as="h4">Editar produto</TypographyComponent>
+              <ExitModal onClick={() => setEditarIsOpen(false)}>
+                <IoClose fontSize={fontSizes.fontSize24} color={colors.white} />
+              </ExitModal>
+            </ModalTitle>
+            <p>Produto selecionado: {productDescription}</p>
+            <div>
+              <label htmlFor="quantity">Quantidade:</label>
+              <input
+                type="number"
+                id="quantity"
+                value={quantityInput}
+                onChange={(e) => setQuantityInput(Number(e.target.value))}
+              />
+            </div>
+          </div>
+          <ButtonComponent onClick={() => {}}>Excluir</ButtonComponent>
+        </ModalContainer>
+      </Modal>
     </Item>
   );
 };
