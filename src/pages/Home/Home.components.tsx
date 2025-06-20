@@ -15,13 +15,17 @@ import ListComponent from "../../components/molecules/List";
 import SearchInput from "../../components/molecules/SearchInput";
 
 import { getStockByDate } from "../../services/Stock";
+import { useNavigation } from "../../shared/useNavigation";
 
 const Home = () => {
   const [productsByExpiration, setProductsByExpiration] = useState([]);
 
+  const { goToSignIn } = useNavigation();
+
   const fetchData = async (startDate: number, endDate: number) => {
     const response = await getStockByDate(startDate, endDate);
-    setProductsByExpiration(response.data);
+    if (response.data) setProductsByExpiration(response.data);
+    else goToSignIn();
   };
 
   useEffect(() => {
@@ -59,6 +63,7 @@ const Home = () => {
       <SearchWrapper>
         <SearchInput />
         <Button
+          onClick={() => alert("Função em desenvolvimento...")}
           style={{ width: sizes.size100, fontSize: fontSizes.fontSize16 }}
         >
           Filtros

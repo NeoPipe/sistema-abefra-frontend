@@ -9,8 +9,11 @@ export const useNavigation = () => {
 
   const goToHome = () => goTo("/");
 
+  const goToSignIn = () => goTo("/signin");
+
   return {
     goBack,
     goToHome,
+    goToSignIn,
   };
 };

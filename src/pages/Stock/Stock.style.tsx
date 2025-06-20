@@ -22,6 +22,10 @@ export const ModalContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+  > div {
+    margin-bottom: ${margins.marginSm};
+  }
 `;
 
 export const ExitModal = styled.div`

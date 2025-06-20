@@ -13,8 +13,9 @@ import {
 } from "./Stock.style";
 import { sizes, fontSizes, colors } from "../../assets/styles/variables";
 
-import { getStock } from "../../services/Stock";
+import { getStock, addToStock } from "../../services/Stock";
 import { postProduct, getProducts } from "../../services/Product";
+import { useNavigation } from "../../shared/useNavigation";
 
 import Modal from "react-modal";
 import { IoClose } from "react-icons/io5";
@@ -24,24 +25,36 @@ const Stock = () => {
   const [productList, setProductList] = useState([]);
   const [productInput, setProductInput] = useState("");
 
+  const [stockInput, setStockInput] = useState("");
+  const [stockDate, setStockDate] = useState("");
+  const [stockQuantity, setStockQuantity] = useState(0);
+
+  const { goToSignIn } = useNavigation();
+
   const fetchStockData = async () => {
     const response = await getStock();
-    setStockList(response.data);
+
+    if (response.data) setStockList(response.data);
+    else goToSignIn();
   };
 
   const fetchProductData = async () => {
     const response = await getProducts();
-    setProductList(response.items);
+
+    if (response.items) setProductList(response.items);
+    else goToSignIn();
   };
 
   const addProduct = async () => {
-    const response = await postProduct(productInput);
-    console.log(response.status);
-    if (response.status === 201) {
-      setIsWaitingCadastrar(false);
-      setCadastrarSucess(true);
-    }
-    setTimeout(() => setCadastrarSucess(false), 2000);
+    await postProduct(productInput);
+    setCadastrarIsOpen(false);
+  };
+
+  const addStock = async () => {
+    const product = productList.find((item) => item.description === stockInput);
+    await addToStock(product.id, stockQuantity, stockDate);
+    setAdicionarIsOpen(false);
+    fetchStockData();
   };
 
   useEffect(() => {
@@ -49,14 +62,11 @@ const Stock = () => {
   }, []);
 
   const [cadastrarIsOpen, setCadastrarIsOpen] = useState(false);
-  const [isWaitingCadastrar, setIsWaitingCadastrar] = useState(false);
-  const [cadastrarSucess, setCadastrarSucess] = useState(false);
   const [adicionarIsOpen, setAdicionarIsOpen] = useState(false);
   const customStyles = {
     content: {
-      width: sizes.size50Percent,
-      height: sizes.size50Percent,
-      top: sizes.size50Percent,
+      width: sizes.size90Percent,
+      top: sizes.size40Percent,
       left: sizes.size50Percent,
       right: "auto",
       bottom: "auto",
@@ -99,17 +109,8 @@ const Stock = () => {
               onChange={(e) => setProductInput(e.target.value)}
             />
           </div>
-          <ButtonComponent
-            onClick={() => {
-              addProduct();
-              setIsWaitingCadastrar(true);
-            }}
-          >
-            {isWaitingCadastrar
-              ? "Carregando..."
-              : cadastrarSucess
-              ? "Adicionado!"
-              : "Adicionar"}
+          <ButtonComponent onClick={() => addProduct()}>
+            Cadastrar
           </ButtonComponent>
         </ModalContainer>
       </Modal>
@@ -125,22 +126,38 @@ const Stock = () => {
                 <IoClose fontSize={fontSizes.fontSize24} color={colors.white} />
               </ExitModal>
             </ModalTitle>
-            <InputComponent placeholder="Produto" list="product-list" />
+            <InputComponent
+              placeholder="Produto"
+              list="product-list"
+              value={stockInput}
+              onChange={(e) => setStockInput(e.target.value)}
+            />
             <datalist id="product-list">
               {productList.map((item) => (
                 <option key={item.id} value={item.description} />
               ))}
             </datalist>
             <InputWrapper>
-              <input type="date" />
+              <input
+                type="date"
+                value={stockDate}
+                onChange={(e) => setStockDate(e.target.value)}
+              />
               <div>
                 <label htmlFor="quantity">Quantidade:</label>
-                <input type="number" id="quantity" />
+                <input
+                  type="number"
+                  id="quantity"
+                  value={stockQuantity}
+                  onChange={(e) => setStockQuantity(Number(e.target.value))}
+                />
               </div>
             </InputWrapper>
           </div>
 
-          <ButtonComponent onClick={() => {}}>Adicionar</ButtonComponent>
+          <ButtonComponent onClick={() => addStock()}>
+            Adicionar
+          </ButtonComponent>
         </ModalContainer>
       </Modal>
     </Container>

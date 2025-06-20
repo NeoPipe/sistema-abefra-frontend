@@ -14,6 +14,8 @@ import {
   ExitModal,
 } from "../../../pages/Stock/Stock.style";
 
+import { editFromStock, deleteFromStock } from "../../../services/Stock";
+
 interface ListItemInterface {
   itemInfo: {
     id: string;
@@ -34,14 +36,23 @@ const ListItem = ({ itemInfo }: ListItemInterface) => {
 
   const customStyles = {
     content: {
-      width: sizes.size50Percent,
-      height: sizes.size50Percent,
+      width: sizes.size90Percent,
       top: sizes.size50Percent,
       left: sizes.size50Percent,
       right: "auto",
       bottom: "auto",
       transform: "translate(-50%, -50%)",
     },
+  };
+
+  const editItem = async () => {
+    await editFromStock(id, quantityInput, dueDate);
+    setEditarIsOpen(false);
+  };
+
+  const deleteItem = async () => {
+    await deleteFromStock(id);
+    setExcluirIsOpen(false);
   };
 
   return (
@@ -80,7 +91,13 @@ const ListItem = ({ itemInfo }: ListItemInterface) => {
             </ModalTitle>
             <p>Confirmar exclusão do produto: {productDescription}</p>
           </div>
-          <ButtonComponent onClick={() => {}}>Excluir</ButtonComponent>
+          <ButtonComponent
+            onClick={() => {
+              deleteItem();
+            }}
+          >
+            Excluir
+          </ButtonComponent>
         </ModalContainer>
       </Modal>
 
@@ -104,7 +121,13 @@ const ListItem = ({ itemInfo }: ListItemInterface) => {
               />
             </div>
           </div>
-          <ButtonComponent onClick={() => {}}>Excluir</ButtonComponent>
+          <ButtonComponent
+            onClick={() => {
+              editItem();
+            }}
+          >
+            Editar
+          </ButtonComponent>
         </ModalContainer>
       </Modal>
     </Item>

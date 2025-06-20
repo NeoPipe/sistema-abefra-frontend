@@ -1,25 +1,35 @@
 import api from "../../config/api";
-import type { SignInResponseInterface } from "../../models/interfaces/auth";
+import { validateLocalToken } from "../Auth";
+import { toast } from "react-toastify";
+import type { ProductsInterface } from "../../models/interfaces/product";
 
 const path = "/v1/products";
 
 const getProducts = async () => {
-  const response = await api.get<SignInResponseInterface>(path).then((res) => {
+  validateLocalToken();
+
+  const response = await api.get<ProductsInterface>(path).then((res) => {
     return res.data;
   });
 
   return response;
-}
+};
 
 const postProduct = async (description: string) => {
-  console.log(description);
+  validateLocalToken();
 
-  const response = await api.post(path, {description: description}).then(res => {
+  const promise = api.post(path, { description: description }).then((res) => {
     console.log(res);
-    return res.data
+    return res.data;
   });
-
+  toast.promise(promise, {
+    pending: "Carregando...",
+    success: "Produto adicionado!",
+  });
+  const response = promise.then((res) => {
+    return res.data;
+  });
   return response;
-}
+};
 
 export { getProducts, postProduct };
