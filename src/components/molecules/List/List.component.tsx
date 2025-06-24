@@ -12,7 +12,7 @@ const ListComponent = ({ data }: ListComponentInterface) => {
   return (
     <List>
       {data.map((item) => (
-        <ListItem itemInfo={item} />
+        <ListItem key={item.id} itemInfo={item} />
       ))}
     </List>
   );

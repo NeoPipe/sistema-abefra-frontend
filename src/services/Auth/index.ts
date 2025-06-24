@@ -12,7 +12,17 @@ const signin = async (data: SignInRequestInterface) =>
       "Authorization"
     ] = `Bearer ${res.data["accessToken"]}`;
 
+    localStorage.setItem("accessToken", res.data["accessToken"]);
+
     return res.status;
   });
 
-export { signin };
+const validateLocalToken = () => {
+  if (!api.defaults.headers.common["Authorization"]) {
+    api.defaults.headers.common[
+      "Authorization"
+    ] = `Bearer ${localStorage.getItem("acessToken")}`;
+  }
+};
+
+export { signin, validateLocalToken };

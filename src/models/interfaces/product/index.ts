@@ -1,10 +1,9 @@
-interface SignInRequestInterface {
-  username: string;
-  password: string;
+interface ProductsInterface {
+  items: [
+    {
+      description: string;
+    }
+  ];
 }
 
-interface SignInResponseInterface {
-  accessToken: string;
-}
-
-export type { SignInRequestInterface, SignInResponseInterface };
+export type { ProductsInterface };
