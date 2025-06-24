@@ -14,11 +14,12 @@ import {
   ExitModal,
 } from "../../../pages/Stock/Stock.style";
 
-import { editFromStock, deleteFromStock } from "../../../services/Stock";
+import { editFromStock } from "../../../services/Stock";
 
 interface ListItemInterface {
   itemInfo: {
     id: string;
+    productId: string;
     productDescription: string;
     quantity: number;
     dueDate: string;
@@ -26,13 +27,13 @@ interface ListItemInterface {
 }
 
 const ListItem = ({ itemInfo }: ListItemInterface) => {
-  const { id, productDescription, quantity, dueDate } = itemInfo;
+  const { id, productDescription, quantity, dueDate, productId } = itemInfo;
   const formattedDueDate = dueDate.slice(5, -14).replace("-", "/");
 
   const [showItemOptions, setShowItemOptions] = useState("none");
   const [excluirIsOpen, setExcluirIsOpen] = useState(false);
   const [editarIsOpen, setEditarIsOpen] = useState(false);
-  const [quantityInput, setQuantityInput] = useState(quantity);
+  const [quantityInput, setQuantityInput] = useState(0);
 
   const customStyles = {
     content: {
@@ -46,14 +47,14 @@ const ListItem = ({ itemInfo }: ListItemInterface) => {
   };
 
   const editItem = async () => {
-    await editFromStock(id, quantityInput, dueDate);
+    await editFromStock(productId, quantityInput);
     setEditarIsOpen(false);
   };
 
-  const deleteItem = async () => {
-    await deleteFromStock(id);
-    setExcluirIsOpen(false);
-  };
+  // const deleteItem = async () => {
+  //   await deleteFromStock(productId);
+  //   setExcluirIsOpen(false);
+  // };
 
   return (
     <Item key={id}>
@@ -74,7 +75,7 @@ const ListItem = ({ itemInfo }: ListItemInterface) => {
 
       <ItemOptions style={{ display: showItemOptions }}>
         <button onClick={() => setEditarIsOpen(true)}>Editar</button>
-        <button onClick={() => setExcluirIsOpen(true)}>Excluir</button>
+        {/* <button onClick={() => setExcluirIsOpen(true)}>Excluir</button> */}
         <div onClick={() => setShowItemOptions("none")}>
           <IoClose fontSize={fontSizes.fontSize32} color={colors.white} />
         </div>
@@ -93,7 +94,7 @@ const ListItem = ({ itemInfo }: ListItemInterface) => {
           </div>
           <ButtonComponent
             onClick={() => {
-              deleteItem();
+              // deleteItem();
             }}
           >
             Excluir
@@ -112,7 +113,7 @@ const ListItem = ({ itemInfo }: ListItemInterface) => {
             </ModalTitle>
             <p>Produto selecionado: {productDescription}</p>
             <div>
-              <label htmlFor="quantity">Quantidade:</label>
+              <label htmlFor="quantity">Quantidade a ser removida:</label>
               <input
                 type="number"
                 id="quantity"

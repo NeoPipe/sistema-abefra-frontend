@@ -63,16 +63,12 @@ const addToStock = async (
   return response;
 };
 
-const editFromStock = async (
-  productId: string,
-  quantity: number,
-  dueDate: string
-) => {
+const editFromStock = async (productId: string, quantity: number) => {
   validateLocalToken();
 
   const promise = api.patch(
-    path,
-    { productId, quantity, dueDate, status: 1 },
+    path + productId + "/remove",
+    { quantity },
     { params: { id: productId } }
   );
   toast.promise(promise, {
