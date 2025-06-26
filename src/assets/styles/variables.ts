@@ -11,6 +11,7 @@ interface ColorsInterface {
   mediumOrange: string;
   lightOrange: string;
   exitRed: string;
+  redOpacity: string;
 }
 
 interface FontSizesInterface {
@@ -140,7 +141,8 @@ export const colors: ColorsInterface = {
   darkOrange: "#FFA000",
   mediumOrange: "#FFB73F",
   lightOrange: "#FED187",
-  exitRed: '#D10000',
+  exitRed: "#D10000",
+  redOpacity: "#D1000004D",
 };
 
 export const zIndex: ZIndexInterface = {

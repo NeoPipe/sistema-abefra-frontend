@@ -27,13 +27,21 @@ interface ListItemInterface {
 }
 
 const ListItem = ({ itemInfo }: ListItemInterface) => {
-  const { id, productDescription, quantity, dueDate, productId } = itemInfo;
+  const { id, productDescription, quantity, dueDate } = itemInfo;
   const formattedDueDate = dueDate.slice(5, -14).replace("-", "/");
+  const today = new Date();
+  const expiration = new Date(dueDate);
+
+  let expiredColor = colors.white;
+  if (today.getTime() > expiration.getTime()) {
+    expiredColor = colors.redOpacity;
+  }
 
   const [showItemOptions, setShowItemOptions] = useState("none");
   const [excluirIsOpen, setExcluirIsOpen] = useState(false);
   const [editarIsOpen, setEditarIsOpen] = useState(false);
   const [quantityInput, setQuantityInput] = useState(0);
+  const [removeReasonId, setRemoveReasonId] = useState("1");
 
   const customStyles = {
     content: {
@@ -47,7 +55,7 @@ const ListItem = ({ itemInfo }: ListItemInterface) => {
   };
 
   const editItem = async () => {
-    await editFromStock(productId, quantityInput);
+    await editFromStock(id, quantityInput, removeReasonId);
     setEditarIsOpen(false);
   };
 
@@ -57,7 +65,7 @@ const ListItem = ({ itemInfo }: ListItemInterface) => {
   // };
 
   return (
-    <Item key={id}>
+    <Item key={id} style={{ backgroundColor: expiredColor }}>
       <InfoWrapper>
         <div>
           <p>{productDescription}</p>
@@ -120,6 +128,22 @@ const ListItem = ({ itemInfo }: ListItemInterface) => {
                 value={quantityInput}
                 onChange={(e) => setQuantityInput(Number(e.target.value))}
               />
+            </div>
+            <div>
+              <label htmlFor="motive">Motivo da alteração:</label>
+              <br />
+              <select
+                name=""
+                id="motive"
+                value={removeReasonId}
+                onChange={(e) => setRemoveReasonId(e.target.value)}
+              >
+                <option value="1">Prodto Vencido</option>
+                <option value="2">Consumo</option>
+                <option value="3">Doação</option>
+                <option value="4">Produto Danificado</option>
+                <option value="5">Descarte</option>
+              </select>
             </div>
           </div>
           <ButtonComponent
