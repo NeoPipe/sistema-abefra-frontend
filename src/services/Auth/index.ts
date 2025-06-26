@@ -21,7 +21,7 @@ const validateLocalToken = () => {
   if (!api.defaults.headers.common["Authorization"]) {
     api.defaults.headers.common[
       "Authorization"
-    ] = `Bearer ${localStorage.getItem("acessToken")}`;
+    ] = `Bearer ${localStorage.getItem("accessToken")}`;
   }
 };
 
