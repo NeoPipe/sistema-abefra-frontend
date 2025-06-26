@@ -79,6 +79,15 @@ const Home = () => {
         </Link>
       </SearchWrapper>
 
+      <SearchWrapper>
+        <Link
+          to="/history"
+          style={{ textDecorationLine: "none", width: sizes.size100Percent }}
+        >
+          <Button style={{ fontSize: fontSizes.fontSize16 }}>Histórico</Button>
+        </Link>
+      </SearchWrapper>
+
       <Typography
         as="h2"
         style={{

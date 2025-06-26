@@ -3,6 +3,7 @@ import MainPageTemplate from "../components/templates/MainPageTemplate";
 import Stock from "../pages/Stock";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
+import History from "../pages/History";
 
 const AppRoutes = () => {
   return (
@@ -22,6 +23,14 @@ const AppRoutes = () => {
           element={
             <MainPageTemplate pageName="Estoque">
               <Stock />
+            </MainPageTemplate>
+          }
+        />
+        <Route
+          path="/history"
+          element={
+            <MainPageTemplate pageName="Histórico">
+              <History />
             </MainPageTemplate>
           }
         />
