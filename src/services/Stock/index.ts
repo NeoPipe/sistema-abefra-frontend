@@ -9,7 +9,7 @@ const getStock = async () => {
   validateLocalToken();
 
   const response = await api
-    .get<StockProductInterface>(path)
+    .get<StockProductInterface>(path, { params: { status: 1 } })
     .then((res) => {
       return res.data;
     })
@@ -32,6 +32,7 @@ const getStockByDate = async (startDate?: number, endDate?: number) => {
   const params = {
     startDueDate: startDueDate.toISOString(),
     endDueDate: endDueDate.toISOString(),
+    status: 1,
   };
 
   const response = await api
