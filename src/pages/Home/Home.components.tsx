@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Button from "../../components/atoms/Button";
 import Typography from "../../components/atoms/Typography";
@@ -13,28 +13,49 @@ import {
 } from "../../assets/styles/variables";
 import ListComponent from "../../components/molecules/List";
 import SearchInput from "../../components/molecules/SearchInput";
-import type { StockProductInterface } from "../../models/interfaces/stock-product";
+
+import { getStockByDate } from "../../services/Stock";
+import { useNavigation } from "../../shared/useNavigation";
 
 const Home = () => {
-  const productsByExpiration: StockProductInterface[] = [
-    { description: "Milk (1L carton)", quantity: 2, dueDate: "06/06" },
-    { description: "Eggs (dozen)", quantity: 1, dueDate: "10/06" },
-    { description: "Fresh strawberries", quantity: 3, dueDate: "05/06" },
-    { description: "Cheddar cheese block", quantity: 1, dueDate: "20/06" },
-    { description: "Spinach (bag)", quantity: 2, dueDate: "07/06" },
-    { description: "Yogurt (individual cups)", quantity: 6, dueDate: "12/06" },
-    { description: "Chicken breast (frozen)", quantity: 4, dueDate: "30/06" },
-    { description: "Canned beans", quantity: 5, dueDate: "03/07" },
-    { description: "Bread (whole grain loaf)", quantity: 1, dueDate: "08/06" },
-    { description: "Apples", quantity: 6, dueDate: "18/06" },
-  ];
+  const [productsByExpiration, setProductsByExpiration] = useState([]);
 
+  const { goToSignIn } = useNavigation();
+
+  const fetchData = async (startDate: number, endDate: number) => {
+    const response = await getStockByDate(startDate, endDate);
+    if (response.data) setProductsByExpiration(response.data);
+    else goToSignIn();
+  };
+
+  useEffect(() => {
+    fetchData(0, oneDayInMs * 7);
+  }, []);
+
+  const oneDayInMs = 24 * 60 * 60 * 1000;
   const buttonList = [
-    { text: "7 DIAS", color: colors.darkOrange, option: 0 },
-    { text: "10 DIAS", color: colors.mediumOrange, option: 1 },
-    { text: "15 DIAS", color: colors.lightOrange, option: 2 },
+    {
+      text: "7 DIAS",
+      color: colors.darkOrange,
+      option: 0,
+      startDate: 0,
+      endDate: oneDayInMs * 7,
+    },
+    {
+      text: "10 DIAS",
+      color: colors.mediumOrange,
+      option: 1,
+      startDate: oneDayInMs * 7,
+      endDate: oneDayInMs * 10,
+    },
+    {
+      text: "15 DIAS",
+      color: colors.lightOrange,
+      option: 2,
+      startDate: oneDayInMs * 10,
+      endDate: oneDayInMs * 15,
+    },
   ];
-
   const [selectedOption, setSelectedOption] = useState(0);
 
   return (
@@ -42,6 +63,7 @@ const Home = () => {
       <SearchWrapper>
         <SearchInput />
         <Button
+          onClick={() => alert("Função em desenvolvimento...")}
           style={{ width: sizes.size100, fontSize: fontSizes.fontSize16 }}
         >
           Filtros
@@ -54,6 +76,15 @@ const Home = () => {
           style={{ textDecorationLine: "none", width: sizes.size100Percent }}
         >
           <Button style={{ fontSize: fontSizes.fontSize16 }}>Estoque</Button>
+        </Link>
+      </SearchWrapper>
+
+      <SearchWrapper>
+        <Link
+          to="/history"
+          style={{ textDecorationLine: "none", width: sizes.size100Percent }}
+        >
+          <Button style={{ fontSize: fontSizes.fontSize16 }}>Histórico</Button>
         </Link>
       </SearchWrapper>
 
@@ -83,7 +114,11 @@ const Home = () => {
         <ButtonWrapper style={{ display: "flex" }}>
           {buttonList.map((item) => (
             <Button
-              onClick={() => setSelectedOption(item.option)}
+              key={item.option}
+              onClick={() => {
+                setSelectedOption(item.option);
+                fetchData(item.startDate, item.endDate);
+              }}
               style={{
                 backgroundColor: item.color,
                 color: colors.black,
